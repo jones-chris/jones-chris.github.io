@@ -24,20 +24,20 @@ meaningful productivity gains and digital transformation if only there was a way
 understand better than anyone else in the organization?
 
 I propose that there is a way to allow users to do this using tools that they may already use every day – or can learn more easily than a programming language – at extremely low cost, even free for low-traffic use cases. AI 
-can still help them build it, but the tooling avoids programming languages, so they can better understand, maintain, and refactor the application.  The answer involves 1) spreadsheets (specifically the open XLSX file format), 
-2) serverless cloud provider services, and 3) an open source library called Apache POI.
+can still help them build it, but the tooling avoids programming languages, so they can better understand, maintain, and refactor the application.  The answer involves 1) spreadsheets (specifically the open XLSX file format), 2) serverless 
+cloud provider services, and 3) an open source library called Apache POI.
 
 ## Building a Reusable Artifact 
 
 Spreadsheets are core to this solution.  Virtually every business user has some knowledge of how to write formulas to express business logic whether it be summing two numbers, concatenating text, or something more complex
 like joining two datasets based on IDs.  Virtually every user has a spreadsheet software on their laptop, whether it requires a paid license like Microsoft Excel, free options like Google Sheets, or open source options like LibreOffice.  Many of these products share the same formulas and feature sets.
 
-In addition, since 2007 spreadsheets can be saved in the XLSX file format, which is an open format that compresses XML files.  You can verify this for yourself – unzip a XLSX file and you’ll find a bunch of XML files.  
-Moreover, you may have noticed that a spreadsheet you created in Microsoft Excel and saved as a XLSX file can be opened in another spreadsheet software like LibreOffice with minimal or no changes.
+In addition, since 2007 spreadsheets can be saved in the XLSX file format, which is an open format that compresses XML files.  You can verify this for yourself – unzip a XLSX file and you’ll find a bunch of XML files.  Moreover, you may
+have noticed that a spreadsheet you created in Microsoft Excel and saved as a XLSX file can be opened in another spreadsheet software like LibreOffice with minimal or no changes.
 
 XLSX is the lingua franca of spreadsheet tools today and it’s entirely open.  With it, users have multiple paid, free, and open source products to express their business processes in formula syntax that can be executed in
 these products.  Importantly, these products also allow users to debug their business logic.  If input data causes a formula calculation error, a user can use any of these products to open the XLSX file and troubleshoot 
-  the issue without IT needing to be involved.
+the issue without IT needing to be involved.
 
 However, products like Microsoft Excel, Google Sheets, and LibreOffice are difficult if not impossible to run on servers.  But, on the other hand, the mature and open source Apache POI project includes a calculation engine
 that can read and write XLSX files and execute its formulas.  Apache POI is a Java library, which means we can use it as the bridge between the business logic expressed in an XLSX file and a critical, mature traditional 
@@ -118,15 +118,15 @@ Such a script would need to be customized based on the datasets the user needs. 
 
 In order for the JAR to correctly wrap the XLSX file, the XLSX file must follow some standards:
 
-    1. There must be a sheet called “metadata”.  
-    2. In the “metadata” sheet, there must be the following named range cells:
-        1. errors:  This is a count of all errors in the spreadsheet that signify something went wrong in the calculation.  If 0, the JAR interprets this as the calculation succeeded.  If not 0, the JAR interprets this 
-          as the calculation failed.  For IT audiences, you can think of this as similar to shell command exit codes.  For example, the errors cell formula may be `=SUMPRODUCT(--ISERROR($output_0.A1:D5000))`
+  1. There must be a sheet called `metadata`.
+  2. In the `metadata` sheet, there must be the following named range cells:
+        1. errors:  This is a count of all errors in the spreadsheet that signify something went wrong in the calculation. If 0, the JAR interprets this as the calculation succeeded. If not 0, the JAR interprets thisthis 
+        as the calculation failed. For IT audiences, you can think of this as similar to shell command exit codes. For example, the errors cell formula may be `=SUMPRODUCT(--ISERROR($output_0.A1:D5000))`
         2. author: The name of the author of the spreadsheet.
-    3. The workbook contains zero or more named ranges that begin with the prefix “input_”.  These named ranges are where the input datasets will be placed.  They will be exposed to clients such as AI models.  Note that 
-          care should be taken when setting the size of the named range because if the size of the input dataset is greater than the named range size, then the JAR will throw an error.  Also, it is optional but recommended that you assign data types to each column of the named range.
-    4. The workbook contains zero or more named ranges or sheets that begin with with the prefix “output_”. The data in these named ranges will be exposed to clients, such as AI models, for retrieval. Note that care 
-          should be taken when setting the size of the named range.  It is recommended to use dynamic named ranges so the size of the named range can adapt to the size of the input dataset.  Also, it is optional but recommended that you assign data types to each column of the named range.
+  3. The workbook contains zero or more named ranges that begin with the prefix `input_`. These named ranges are where the input datasets will be placed. They will be exposed to clients such as AI models. Note that
+     care should be taken when setting the size of the named range because if the size of the input dataset is greater than the named range size, then the JAR will throw an error. Also, it is optional but recommended that you assign data types to each column of the named range.
+  4. The workbook contains zero or more named ranges or sheets that begin with the prefix “output_”. The data in these named ranges will be exposed to clients, such as AI models, for retrieval. Note that care 
+  should be taken when setting the size of the named range.  It is recommended to use dynamic named ranges so the size of the named range can adapt to the size of the input dataset.  Also, it is optional but recommended that you assign data types to each column of the named range.
 
 The user is free to write the business logic formulas in any way they choose.  The above standards only apply to the spreadsheet’s metadata, error-checking logic, inputs, and outputs.
 
