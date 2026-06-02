@@ -147,4 +147,6 @@ business logic grows in complexity, the architecture can grow with them.
 If these ideas intrigue you, please contact me to get involved – whether that’s to share feedback, help build, user test, or something else.  The project has reached a point where I need other people’s perspectives on 
 if and how this could be useful to others.
 
+Here is the GitHub repo:  https://github.com/jones-chris/eel/tree/main/engine 
+
 Thanks for reading!
