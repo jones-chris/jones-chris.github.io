@@ -1,10 +1,14 @@
 # Democratizing the Expression of Deterministic Logic with AI Weldr
 
+![claude integration](./images/ai_weldr_claude_result.png)
+
 ## Summary / Intro
 
 Non-technical business users are often intimately familiar with their business processes.  However, they lack the technical programming skills to express that business process in a way that computers can efficiently execute.
 
-If the business users want to automate their process, they usually will put together a presentation and lobby for budget approval to their department leads or perhaps at their annual company-wide days-long budget planning 
+Due to this limitation, the path for a business user to express their deterministic logic and automate it is lengthy, such as this:
+
+They usually will put together a presentation and lobby for budget approval to their department leads or perhaps at their annual company-wide days-long budget planning 
 meetings.
 
 Assuming they get budget approval, IT employees become involved:  A project manager or business analyst liaisons with the business users to understand their requirements.  A team of software engineers is assigned to design 
@@ -53,7 +57,7 @@ into it, calculate the formulas, and write the resulting XLSX file to storage or
 To make it easy for non-technical users to load their XLSX file into this reusable executable Java application there is a small web page where they can upload their XLSX file.  The web page returns the JAR so they can 
 download it and run it.
 
-## Running Your JAR: Options for Every Skillset
+## Running Your JAR: Options for Every Skill Set
 
 Users now have a JAR that can run their XLSX file.  I think they have 4 options to run it.  Each option is detailed below and starts with the simplest option and progresses to the most complex option.  Each has advantages
 and disadvantages.
